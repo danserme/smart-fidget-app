@@ -1,0 +1,55 @@
+{
+    "popups": {
+        "newData": {
+            "reason": "New Data Available on the Device",
+            "text": "New Data was found on the device!",
+            "buttons": [{
+                "text": "Upload",
+                "link": "/addData"
+            }]
+        },
+        "newReq": {
+            "reason": "New Access Request",
+            "text": "New Data was found on the device!",
+            "buttons": [{
+                "text": "Decline",
+                "link": "/"
+            },
+            {
+                "text": "Accept",
+                "link": "/"
+            }]
+        },
+        "preview": {
+            "reason": "No Device is Connected",
+            "text": "You are currently exploring the app. All data shown is fake.",
+            "buttons": [{
+                "text": "Connect Device",
+                "link": "/"
+            }]
+        }
+    },
+    "questions": [
+        {
+            "id": 0,
+            "text": "How did you feel?",
+            "short": "mood",
+            "type": "tags",
+            "content": ["Happy", "Sad", "Worried", "Neutural"]
+        },
+        {
+            "id": 1,
+            "text": "What were you doing?",
+            "short": "activity",
+            "type": "tags",
+            "content": ["Working", "Studying", "Workout", "Hobby", "Moving around the city", "Resting", "Hanging out with friends"]
+        },
+        {
+            "id": 2,
+            "text": "Anything you want to share?",
+            "short": "comment",
+            "type": "comment",
+            "content": ["Type in your comments"]
+        }
+    ]
+}
