@@ -1,28 +1,41 @@
 import React from "react";
-import Tag from "../ui/Tag";
 import Heartbeat from "../ui/Heartbeat";
 import GhostButton from "../ui/buttons/GhostButtonSmall";
+import Tag from "../ui/Tag";
 
-export default function LoggedItem({ min = 56, max = 98, avg = 77, }) {
+const placeholder = {
+    startTime: "23:54:02",
+    endTime: "23:59:27",
+    min: 67,
+    max: 109,
+    avg: 98,
+    id: 1,
+    main: "cw",
+    duration: 15,
+    comment: "I was in metro and there were way too many...",
+    tags: "Focused;Anxious;Metro;Many people"
+}
+
+export default function LoggedItem({ session = placeholder }) {
+    const tags = session.tags ? session.tags.split(";") : "";
+
     return(
         <div className="py-3 px-5 border-2 my-3">
-            <div className="flex font-bold justify-between">
-                <h1>11.00 - 11.20</h1>
-                <Heartbeat text={"avg"} val={avg} />
+            <div className="flex justify-between">
+                <h1 className="font-bold">{session.startTime} - {session.endTime}</h1>
+                <p>({session.duration} min)</p>
+                <Heartbeat text={"avg"} val={session.avg} />
             </div>
             <div className="flex w-full justify-between my-3">
                 <div className="flex flex-wrap items-center text-nowrap gap-3 text-xs">
-                    <Tag tag={"Focused"} selectable={false} />
-                    <Tag tag={"Anxious"} selectable={false} />
-                    <Tag tag={"Metro"} selectable={false} />
-                    <Tag tag={"Many people"} selectable={false} />
+                    {tags && tags.map((tag, index) => {
+                        return(
+                            <Tag selectable={false} tag={tag} key={index} />
+                        );
+                    })}
                 </div>
-                {/* <div className="text-sm">
-                    <Heartbeat text={"max"} val={max} />
-                    <Heartbeat text={"min"} val={min} />
-                </div> */}
             </div>
-            <p>I was in metro and there were way too many...</p>
+            <p>{session.comment}</p>
             <div className="w-full text-right">
                 <GhostButton text={"more"} />
             </div>

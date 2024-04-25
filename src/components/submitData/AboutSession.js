@@ -3,16 +3,7 @@ import Edit from "../ui/icons/Edit";
 import Tag from "../ui/Tag";
 import Heartbeat from "../ui/Heartbeat";
 
-const placeholder = {
-    startTime: "23:54:02",
-    endTime: "23:59:27",
-    min: 67,
-    max: 109,
-    avg: 98,
-    id: 1
-}
-
-export default function AboutSession({ notes, session = placeholder , onEdit, onNotes, tot = 3 }) {
+export default function AboutSession({ notes, session , onEdit, onNotes, tot = 3 }) {
     return(
         <div>
             <header className="flex justify-between">

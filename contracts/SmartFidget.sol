@@ -15,7 +15,7 @@ contract SmartFidget {
         string main;
         string startTime;
         string endTime;
-        string[] tags;
+        string tags;
         string comment;
     }
 
@@ -33,15 +33,26 @@ contract SmartFidget {
     event RecordAdded(uint256 recordId);
     event SessionAdded(string date, uint256 sessionId);
 
-    mapping(string => Session[]) dayToSessions;
+    mapping(string => Session[]) public dayToSessions;
+    mapping(address => bool) public permitted;
 
     constructor() {
         owner = msg.sender;
+        permitted[owner] = true;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Unauthorized!");
+        require(msg.sender == owner, "Only owner can do this!");
         _;
+    }
+
+    modifier onlyPermitted() {
+        require(permitted[msg.sender] == true, "Unauthorized!");
+        _;
+    }
+    
+    function addPermitted() public onlyOwner {
+        permitted[msg.sender] = true;
     }
 
     function addRecord(
@@ -52,7 +63,7 @@ contract SmartFidget {
         uint256 _totDuration,
         string memory _main,
         string memory _date
-    ) public onlyOwner {
+    ) public onlyPermitted {
         Record storage newRecord = records.push(); // Create a new Record and get a reference to it.
         newRecord.writer = msg.sender;
         newRecord.avg = _avg;
@@ -77,9 +88,9 @@ contract SmartFidget {
         string memory _date,
         string memory _startTime,
         string memory _endTime,
-        string[] memory _tags,
+        string memory _tags,
         string memory _comment
-    ) public onlyOwner {
+    ) public onlyPermitted {
         Session memory newSession = Session({
             avg: _avg,
             min: _min,
@@ -133,7 +144,7 @@ contract SmartFidget {
         string memory main,
         string memory startTime,
         string memory endTime,
-        string[] memory tags,
+        string memory tags,
         string memory comment
     ) {
         require(_id < dayToSessions[_date].length, "Session does not exist.");

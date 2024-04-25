@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import CTAButton from "../ui/buttons/CTAButton";
 import Session from "./Session";
@@ -15,7 +15,14 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
     // const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [isSent, setSent] = useState(false);
-    const [isDetails, setIsDetails] = useState(false);
+    const [isMainSent, setMainSent] = useState(false);
+    const [run, setRun] = useState(false);
+
+    useEffect(() => {
+        if(!run && isMainSent) {
+            setRun(true);
+        }
+    }, [isMainSent, run]);
 
     let avgHB;
     let minHB;
@@ -49,7 +56,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
         main = "p";
         sessionCount = 3;
         duration = 16;
-        date = "8.4.24";
+        date = "10.4.24";
     }
 
     function getValues(arr) {
@@ -96,10 +103,11 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
             const contract = new ethers.Contract(smartFidgetAddress, SmartFidget.abi, signer);
             const transactionRecord = await contract.addRecord(avgHB, minHB, maxHB, sessionCount, duration, main, date);
             setIsLoading(true);
+            setMainSent(true);
             await transactionRecord.wait();
-            setSent(true);
             setIsLoading(false);
             await readData();
+            setSent(true);
         }
         onDisconnectDevice();
         onSetNewDataAvailable(false);
@@ -120,7 +128,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
                 {
                     passed && !isSent && combinedData.map((session, index) => {
                         return(
-                            <Session date={date} session={session} tot={sessionCount} key={index} />
+                            <Session date={date} session={session} tot={sessionCount} key={index} run={run} />
                         )
                     })
                 }
@@ -129,7 +137,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
                 {
                     !passed && !isSent && sessions.map((session, index) => {
                         return(
-                            <Session date={date} session={session} key={index} tot={sessions.length} />
+                            <Session date={date} key={index} tot={sessions.length} run={run} />
                         )
                     })
                 }

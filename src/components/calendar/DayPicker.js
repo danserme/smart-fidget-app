@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { generateDate, months } from "../../utils/calendar";
 import dayjs from "dayjs";
 import cn from "../../utils/cn";
@@ -9,10 +9,6 @@ export default function DayPicker({ onDateChange }) {
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
-
-  useEffect(() => {
-    onDateChange(selectDate.toDate().toDateString());
-  }, [selectDate, onDateChange]);
 
   return (
     <div className="w-96 h-96">
@@ -37,7 +33,7 @@ export default function DayPicker({ onDateChange }) {
             })}
         </div>
         <div className="w-full grid grid-cols-7">
-            {generateDate(today.month(), today.year()).map(({ date, currentMonth, today, hasData }, index) => {
+            {generateDate(today.month(), today.year()).map(({ date, currentMonth, today, hasData, sessionCount }, index) => {
             return (
                 <div key={index} className="h-14 border-t grid place-content-center text-sm">
                 <h1 className={cn(
@@ -49,6 +45,7 @@ export default function DayPicker({ onDateChange }) {
                 )}
                 onClick={() => {
                     setSelectDate(date);
+                    onDateChange(date, hasData, sessionCount);
                 }}
                 >{date.date()}</h1>
                 </div>

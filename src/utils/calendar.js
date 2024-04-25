@@ -3,13 +3,16 @@ import readData from "./readData";
 
 const data = await readData();
 const recordDates = [];
+const sessionCounts = {};
 data.forEach(el => {
     console.log(el)
     const d = el.date.split('.')[0];
     const m = el.date.split('.')[1];
     const y = el.date.split('.')[2];
     const date = new Date(parseInt("20"+y), m-1, d);
-    recordDates.push(dayjs(date).toDate().toDateString());
+    const val = dayjs(date).toDate().toDateString();
+    recordDates.push(val);
+    sessionCounts[val] = el.sessionCount;
 });
 
 
@@ -36,7 +39,8 @@ export const generateDate = (
             currentMonth: true,
             date: firstDateOfMonth.date(i),
             today: firstDateOfMonth.date(i).toDate().toDateString() === dayjs().toDate().toDateString(),
-            hasData: recordDates.includes(firstDateOfMonth.date(i).toDate().toDateString())
+            hasData: recordDates.includes(firstDateOfMonth.date(i).toDate().toDateString()),
+            sessionCount: sessionCounts[firstDateOfMonth.date(i).toDate().toDateString()]
         });
     }
 
