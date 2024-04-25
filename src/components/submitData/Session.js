@@ -102,7 +102,7 @@ export default function Session({ session = placeholder, tot, date, run, onSetOv
         <div>
             <div className="w-11/12 border mx-auto my-5 p-5">
                 {!edit && <AboutSession onEdit={setEdit} session={session} key={session} notes={notes} onNotes={setNotes} tot={tot} />}
-                {edit && <Correlations onEdit={setEdit} session={session} key={session} notes={notes} onNotes={setNotes} />}
+                {edit && <Correlations onEdit={setEdit} session={session} key={session} notes={notes} onNotes={setNotes} tot={tot} />}
             </div>
         </div>
     );
