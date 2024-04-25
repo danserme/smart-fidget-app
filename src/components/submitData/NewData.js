@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CTAButton from "../ui/buttons/CTAButton";
 import Session from "./Session";
 import Summary from "./Summary";
 import SmartFidget from "../../contracts/SmartFidget.sol/SmartFidget.json";
 import { ethers } from "ethers";
-import readData from "../../utils/readData";
 import requestAccount from "../../utils/requestAccount";
 import { smartFidgetAddress } from "../../utils/addr";
-
-
+import Overlay from "../ui/Overlay";
+import delay from "../../utils/delay";
 
 export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvailable }) {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [isSent, setSent] = useState(false);
     const [isMainSent, setMainSent] = useState(false);
     const [run, setRun] = useState(false);
+    const [overlayText, setOverlayText] = useState("!");
 
     useEffect(() => {
         if(!run && isMainSent) {
@@ -56,7 +56,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
         main = "p";
         sessionCount = 3;
         duration = 16;
-        date = "10.4.24";
+        date = "8.4.24";
     }
 
     function getValues(arr) {
@@ -89,6 +89,9 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
 
     async function handleUploadClick() {
         if (typeof window.ethereum !== "undefined") {
+            setIsLoading(true);
+            setOverlayText("Follow the instructions on MetaMask!");
+            await delay(1000);
             await requestAccount();
             let signer = null;
             let provider;
@@ -101,23 +104,23 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
             }
             console.log("Connected account:", await signer.getAddress());
             const contract = new ethers.Contract(smartFidgetAddress, SmartFidget.abi, signer);
+            setOverlayText("Now you are uploading the general data about your day.");
             const transactionRecord = await contract.addRecord(avgHB, minHB, maxHB, sessionCount, duration, main, date);
-            setIsLoading(true);
             setMainSent(true);
             await transactionRecord.wait();
-            setIsLoading(false);
-            await readData();
             setSent(true);
         }
         onDisconnectDevice();
         onSetNewDataAvailable(false);
-        // navigate('/myrecords');
+        setOverlayText("Your data was successfully recorded!");
+        await delay(2000);
+        navigate('/myrecords');
     };
     
     
     return(
         <div className="w-full border">
-            <div>{isLoading && <p>Loading</p>}</div>
+            <div>{isLoading && <Overlay text={overlayText} />}</div>
             <Summary len={sessionCount}
                 date={date}
                 avg={avgHB}
@@ -128,7 +131,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
                 {
                     passed && !isSent && combinedData.map((session, index) => {
                         return(
-                            <Session date={date} session={session} tot={sessionCount} key={index} run={run} />
+                            <Session date={date} session={session} tot={sessionCount} key={index} run={run} onSetOverlayText={setOverlayText} />
                         )
                     })
                 }
@@ -137,7 +140,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
                 {
                     !passed && !isSent && sessions.map((session, index) => {
                         return(
-                            <Session date={date} key={index} tot={sessions.length} run={run} />
+                            <Session date={date} key={index} tot={sessions.length} run={run} onSetOverlayText={setOverlayText} />
                         )
                     })
                 }

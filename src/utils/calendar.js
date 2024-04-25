@@ -4,8 +4,8 @@ import readData from "./readData";
 const data = await readData();
 const recordDates = [];
 const sessionCounts = {};
+const details = {};
 data.forEach(el => {
-    console.log(el)
     const d = el.date.split('.')[0];
     const m = el.date.split('.')[1];
     const y = el.date.split('.')[2];
@@ -13,6 +13,7 @@ data.forEach(el => {
     const val = dayjs(date).toDate().toDateString();
     recordDates.push(val);
     sessionCounts[val] = el.sessionCount;
+    details[val] = el;
 });
 
 
@@ -40,7 +41,8 @@ export const generateDate = (
             date: firstDateOfMonth.date(i),
             today: firstDateOfMonth.date(i).toDate().toDateString() === dayjs().toDate().toDateString(),
             hasData: recordDates.includes(firstDateOfMonth.date(i).toDate().toDateString()),
-            sessionCount: sessionCounts[firstDateOfMonth.date(i).toDate().toDateString()]
+            sessionCount: sessionCounts[firstDateOfMonth.date(i).toDate().toDateString()],
+            detailed: recordDates.includes(firstDateOfMonth.date(i).toDate().toDateString()) ? details[firstDateOfMonth.date(i).toDate().toDateString()] : {}
         });
     }
 

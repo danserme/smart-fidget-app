@@ -76,7 +76,6 @@ export const SerialPortProvider = ({ children }) => {
 
     const disconnectDevice = async () => {
         const mainP = portD;
-        console.log("disconnect clicked")
         if (mainP) {
             try {
                 console.log("disconnect")
@@ -87,7 +86,7 @@ export const SerialPortProvider = ({ children }) => {
                     writer.releaseLock();
                 }
                 // await closePort();
-                setDeviceConnected(false);
+                // setDeviceConnected(false);
             } catch (err) {
                 console.error('Error disconnecting device:', err);
             }

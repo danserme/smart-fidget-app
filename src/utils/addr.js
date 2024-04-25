@@ -1,1 +1,1 @@
-export const smartFidgetAddress = "0xf916AaB0FD7Fa6603486CCb631B1D5cFD407F40d";
+export const smartFidgetAddress = "0x606c09C673CA6Cb5aF045ca599B6B3C5803B3890";

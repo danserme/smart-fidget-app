@@ -20,7 +20,7 @@ const placeholder = {
     ccw: 0
 }
 
-export default function Session({ session = placeholder, tot, date, run }) {
+export default function Session({ session = placeholder, tot, date, run, onSetOverlayText }) {
     const [edit, setEdit] = useState(false);
     const [notes, setNotes] = useState({});
     const [isSent, setIsSent] = useState(false);
@@ -40,13 +40,14 @@ export default function Session({ session = placeholder, tot, date, run }) {
                         signer = await provider.getSigner();
                     }
                     console.log("Connected account:", await signer.getAddress());
+                    onSetOverlayText("Now you are uploading the data about each session on Blockchain.");
                     let tags = "";
                     if(notes.mood) {
                         notes.mood.forEach(el => {
                             if(!tags) {
                                 tags = el;
                             } else {
-                                tags= ";" + tags + el;
+                                tags= tags + ";" + el;
                             }
                         });
                     }
@@ -55,7 +56,7 @@ export default function Session({ session = placeholder, tot, date, run }) {
                             if(!tags) {
                                 tags = el;
                             } else {
-                                tags= ";" + tags + el;
+                                tags= tags + ";" + el;
                             }
                         });
                     }
@@ -88,13 +89,14 @@ export default function Session({ session = placeholder, tot, date, run }) {
                         tags,
                         comment
                     );
+                    onSetOverlayText("Waiting for the data to be written on blockchain.");
                     await transaction.wait();
                 }
             }
             send();
             setIsSent(true);
         }
-    }, [run, isSent, notes.mood, notes.activity, date, notes.comment, session.avg, session.duration, session.endTime, session.id, session.main, session.max, session.min, session.startTime, session.p, session.cw, session.ccw]);
+    }, [run, isSent, notes.mood, notes.activity, date, notes.comment, session.avg, session.duration, session.endTime, session.id, session.main, session.max, session.min, session.startTime, session.p, session.cw, session.ccw, onSetOverlayText]);
 
     return(
         <div>

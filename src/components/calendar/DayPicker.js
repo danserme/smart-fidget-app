@@ -11,7 +11,7 @@ export default function DayPicker({ onDateChange }) {
   const [selectDate, setSelectDate] = useState(currentDate);
 
   return (
-    <div className="w-96 h-96">
+    <div className="w-1/2 h-96">
         <div className="flex justify-between">
             <h1 className="font-semibold">{months[today.month()]}, {today.year()}</h1>
             <div className="flex items-center gap-5">
@@ -33,21 +33,26 @@ export default function DayPicker({ onDateChange }) {
             })}
         </div>
         <div className="w-full grid grid-cols-7">
-            {generateDate(today.month(), today.year()).map(({ date, currentMonth, today, hasData, sessionCount }, index) => {
+            {generateDate(today.month(), today.year()).map(({ date, currentMonth, today, hasData, sessionCount, detailed }, index) => {
             return (
-                <div key={index} className="h-14 border-t grid place-content-center text-sm">
-                <h1 className={cn(
-                    currentMonth ? "" : "text-gray-400",
-                    today ? "border border-indigo-400" : "",
-                    hasData ? "border border-indigo-400" : "",
-                    selectDate.toDate().toDateString() === date.toDate().toDateString() ? "bg-indigo-400 text-white" : "",
-                    "h-10 w-10 grid place-content-center rounded-full hover:bg-indigo-700 hover:text-white transition-all cursor-pointer"
-                )}
-                onClick={() => {
-                    setSelectDate(date);
-                    onDateChange(date, hasData, sessionCount);
-                }}
-                >{date.date()}</h1>
+                <div  key={index} className="h-14 border-t grid place-content-center text-sm ">
+                    <div className={cn(
+                        hasData ? "bg-indigo-100" : "",
+                        "rounded-full hover:bg-indigo-500 hover:text-white transition-all cursor-pointer"
+                    )}>
+                    <h1 className={cn(
+                        currentMonth ? "" : "text-gray-400",
+                        today ? "border border-indigo-700" : "",
+                        hasData && selectDate.toDate().toDateString() === date.toDate().toDateString() ? "bg-indigo-600 border border-indigo-700 text-white font-semibold" : "",
+                        selectDate.toDate().toDateString() === date.toDate().toDateString() ? "bg-indigo-600 border border-indigo-700 text-white font-semibold" : "",
+                        "h-10 w-10 grid place-content-center rounded-full hover:bg-indigo-500 hover:text-white transition-all cursor-pointer"
+                    )}
+                    onClick={() => {
+                        setSelectDate(date);
+                        onDateChange(date, hasData, sessionCount, detailed);
+                    }}
+                    >{date.date()}</h1>
+                    </div>
                 </div>
             );
             })}

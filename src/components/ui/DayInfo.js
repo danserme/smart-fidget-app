@@ -1,7 +1,7 @@
 import React from "react";
 import Heartbeat from "../ui/Heartbeat";
 
-export default function Summary({ date, len, avg, min, max, duration}) {
+export default function Summary({ date, main, avg, min, max, duration }) {
     return(
         <div>
             <div className="w-full flex justify-between">
@@ -9,7 +9,7 @@ export default function Summary({ date, len, avg, min, max, duration}) {
                 <Heartbeat text={"avg"} val={avg} />
             </div>
             <div className="w-full flex justify-between">
-                <p>You fidgeted {len} times</p>
+                <p>You fidgeted mostly by {main}</p>
                 <Heartbeat text={"min"} val={min} />
             </div>
             <div className="w-full flex justify-between">

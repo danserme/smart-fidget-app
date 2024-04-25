@@ -22,8 +22,10 @@ export default function LoggedItem({ session = placeholder }) {
     return(
         <div className="py-3 px-5 border-2 my-3">
             <div className="flex justify-between">
-                <h1 className="font-bold">{session.startTime} - {session.endTime}</h1>
-                <p>({session.duration} min)</p>
+                <div className="flex gap-5">
+                    <h1 className="font-bold">{session.startTime} - {session.endTime}</h1>
+                    <p>({session.duration} min)</p>
+                </div>
                 <Heartbeat text={"avg"} val={session.avg} />
             </div>
             <div className="flex w-full justify-between my-3">
