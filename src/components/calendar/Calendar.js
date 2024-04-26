@@ -44,7 +44,6 @@ export default function Calendar() {
                 });
                 promises.push(promise);
             }
-            console.log(promises);
             const data = await Promise.all(promises); // Wait for all promises to resolve
             setSessions(data);
         } catch (err) {

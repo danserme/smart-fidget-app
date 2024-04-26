@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { generateDate, months } from "../../utils/calendar";
 import dayjs from "dayjs";
 import cn from "../../utils/cn";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { DataContext } from "../../DataContext";
 
 export default function DayPicker({ onDateChange }) {
   const days = ["M", "T", "W", "T", "F", "S", "S"];
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
+  const data = useContext(DataContext); //to see every data entry even after submisson of data to blockchain
 
   return (
     <div className="w-1/2 h-96">
@@ -33,7 +35,7 @@ export default function DayPicker({ onDateChange }) {
             })}
         </div>
         <div className="w-full grid grid-cols-7">
-            {generateDate(today.month(), today.year()).map(({ date, currentMonth, today, hasData, sessionCount, detailed }, index) => {
+            {data && generateDate(today.month(), today.year(), data).map(({ date, currentMonth, today, hasData, sessionCount, detailed }, index) => {
             return (
                 <div  key={index} className="h-14 border-t grid place-content-center text-sm ">
                     <div className={cn(

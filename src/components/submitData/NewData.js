@@ -56,7 +56,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
         main = "p";
         sessionCount = 3;
         duration = 16;
-        date = "8.4.24";
+        date = "10.4.24";
     }
 
     function getValues(arr) {
@@ -102,7 +102,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
                 provider = new ethers.BrowserProvider(window.ethereum);
                 signer = await provider.getSigner();
             }
-            console.log("Connected account:", await signer.getAddress());
+            // console.log("Connected account:", await signer.getAddress());
             const contract = new ethers.Contract(smartFidgetAddress, SmartFidget.abi, signer);
             setOverlayText("Now you are uploading the general data about your day.");
             const transactionRecord = await contract.addRecord(avgHB, minHB, maxHB, sessionCount, duration, main, date);

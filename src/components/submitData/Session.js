@@ -39,7 +39,7 @@ export default function Session({ session = placeholder, tot, date, run, onSetOv
                         provider = new ethers.BrowserProvider(window.ethereum);
                         signer = await provider.getSigner();
                     }
-                    console.log("Connected account:", await signer.getAddress());
+                    // console.log("Connected account:", await signer.getAddress());
                     onSetOverlayText("Now you are uploading the data about each session on Blockchain.");
                     let tags = "";
                     if(notes.mood) {

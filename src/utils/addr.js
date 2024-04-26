@@ -1,1 +1,1 @@
-export const smartFidgetAddress = "0x606c09C673CA6Cb5aF045ca599B6B3C5803B3890";
+export const smartFidgetAddress = process.env.REACT_APP_SMART_CONTRACT_KEY;

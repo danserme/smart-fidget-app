@@ -1,26 +1,27 @@
 import dayjs from "dayjs";
-import readData from "./readData";
+// import readData from "./readData";
 
-const data = await readData();
-const recordDates = [];
-const sessionCounts = {};
-const details = {};
-data.forEach(el => {
-    const d = el.date.split('.')[0];
-    const m = el.date.split('.')[1];
-    const y = el.date.split('.')[2];
-    const date = new Date(parseInt("20"+y), m-1, d);
-    const val = dayjs(date).toDate().toDateString();
-    recordDates.push(val);
-    sessionCounts[val] = el.sessionCount;
-    details[val] = el;
-});
+// const data = await readData();
 
 
 export const generateDate = (
     month = dayjs().month(),
-    year = dayjs().year()
+    year = dayjs().year(),
+    data
 ) => {
+    const recordDates = [];
+    const sessionCounts = {};
+    const details = {};
+    data.forEach(el => {
+        const d = el.date.split('.')[0];
+        const m = el.date.split('.')[1];
+        const y = el.date.split('.')[2];
+        const date = new Date(parseInt("20"+y), m-1, d);
+        const val = dayjs(date).toDate().toDateString();
+        recordDates.push(val);
+        sessionCounts[val] = el.sessionCount;
+        details[val] = el;
+    });
     const firstDateOfMonth = dayjs().year(year).month(month).startOf("month");
     const lastDateOfMonth = dayjs().year(year).month(month).endOf("month");
 
