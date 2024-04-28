@@ -1,18 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import DayPicker from "./DayPicker";
 import dayjs from "dayjs";
 import { ethers } from "ethers";
 import SmartFidget from "../../contracts/SmartFidget.sol/SmartFidget.json";
 import { smartFidgetAddress } from "../../utils/addr";
 import Record from "./Record";
-import { DataContext } from "../../DataContext";
 
 
 export default function Calendar() {
   const [selectDate, setDateValue] = useState(dayjs());
   const [sessions, setSessions] = useState([]);
   const [details, setDetails] = useState({});
-  const dataSessions = useContext(DataContext); //to see every data entry even after submisson of data to blockchain
 
   const handleDateChange = async (newDate, hasData, sessionCount, detailed) => {
     setDateValue(newDate);
@@ -65,7 +63,7 @@ export default function Calendar() {
     <div className="w-full p-5 border">
       <h1 className="text-2xl font-semibold text-center mb-7">My Records</h1>
       <div className="flex w-full mx-auto divide-x-2 gap-10 item-center">
-        <DayPicker onDateChange={handleDateChange} data={dataSessions} />
+        <DayPicker onDateChange={handleDateChange} />
         <div className="w-full pl-10 pr-5 overflow-scroll">
           <Record sessions={sessions} date={selectDate} details={details} />
         </div>

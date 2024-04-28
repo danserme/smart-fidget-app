@@ -16,7 +16,7 @@ export const DataProvider = ({ children }) => {
             }
         };
         fetchData();
-    }, [location.pathname]);
+    }, [location.pathname, data]);
 
     return (
         <DataContext.Provider value={data}>

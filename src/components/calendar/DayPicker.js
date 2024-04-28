@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { generateDate, months } from "../../utils/calendar";
 import dayjs from "dayjs";
 import cn from "../../utils/cn";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { DataContext } from "../../DataContext";
 
-export default function DayPicker({ onDateChange, data }) {
+export default function DayPicker({ onDateChange }) {
   const days = ["M", "T", "W", "T", "F", "S", "S"];
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
+
+  //to see today's data entry even after submisson of data to blockchain
+  const [run, setRun] = useState(true);
+  const dataSessions = useContext(DataContext);
+
+  useEffect(() => {
+    const dates = dataSessions ? generateDate(today.month(), today.year(), dataSessions) : [];
+    const selectedDay = dates.find(day =>
+      day.date.toDate().toDateString() === today.toDate().toDateString() && day.date.toDate().toDateString() === selectDate.toDate().toDateString()
+    );
+    if (run && selectedDay.hasData) {
+        onDateChange(selectedDay.date, selectedDay.hasData, selectedDay.sessionCount, selectedDay.detailed);
+        setRun(false);
+    }
+  }, [selectDate, onDateChange, today, run, dataSessions]);
 
   return (
     <div className="w-1/2 h-96">
@@ -33,7 +49,7 @@ export default function DayPicker({ onDateChange, data }) {
             })}
         </div>
         <div className="w-full grid grid-cols-7">
-            {data && generateDate(today.month(), today.year(), data).map(({ date, currentMonth, today, hasData, sessionCount, detailed }, index) => {
+            {dataSessions && generateDate(today.month(), today.year(), dataSessions).map(({ date, currentMonth, today, hasData, sessionCount, detailed }, index) => {
             return (
                 <div  key={index} className="h-14 border-t grid place-content-center text-sm ">
                     <div className={cn(

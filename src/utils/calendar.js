@@ -1,8 +1,4 @@
 import dayjs from "dayjs";
-// import readData from "./readData";
-
-// const data = await readData();
-
 
 export const generateDate = (
     month = dayjs().month(),
@@ -46,7 +42,6 @@ export const generateDate = (
             detailed: recordDates.includes(firstDateOfMonth.date(i).toDate().toDateString()) ? details[firstDateOfMonth.date(i).toDate().toDateString()] : {}
         });
     }
-
 
     //generate suffix dates
     const remaining = 7 * 5 - arrayOfDate.length;
