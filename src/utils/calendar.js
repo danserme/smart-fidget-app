@@ -37,7 +37,7 @@ export const generateDate = (
             currentMonth: true,
             date: firstDateOfMonth.date(i),
             today: firstDateOfMonth.date(i).toDate().toDateString() === dayjs().toDate().toDateString(),
-            hasData: recordDates.includes(firstDateOfMonth.date(i).toDate().toDateString()),
+            hasData: recordDates.includes(firstDateOfMonth.date(i).toDate().toDateString()) ? true : false,
             sessionCount: sessionCounts[firstDateOfMonth.date(i).toDate().toDateString()],
             detailed: recordDates.includes(firstDateOfMonth.date(i).toDate().toDateString()) ? details[firstDateOfMonth.date(i).toDate().toDateString()] : {}
         });
