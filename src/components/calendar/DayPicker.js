@@ -17,10 +17,14 @@ export default function DayPicker({ onDateChange }) {
 
   useEffect(() => {
     const dates = dataSessions ? generateDate(today.month(), today.year(), dataSessions) : [];
-    const selectedDay = dates.find(day =>
-      day.date.toDate().toDateString() === today.toDate().toDateString() && day.date.toDate().toDateString() === selectDate.toDate().toDateString()
+    let selectedDay;
+    dates.forEach(day => {
+            if (day.date.toDate().toDateString() === today.toDate().toDateString() && day.date.toDate().toDateString() === selectDate.toDate().toDateString()) {
+                selectedDay = day;
+            }
+        }
     );
-    if (run && selectedDay.hasData) {
+    if (run && selectedDay) {
         onDateChange(selectedDay.date, selectedDay.hasData, selectedDay.sessionCount, selectedDay.detailed);
         setRun(false);
     }

@@ -10,7 +10,7 @@ import { smartFidgetAddress } from "../../utils/addr";
 import Overlay from "../ui/Overlay";
 import delay from "../../utils/delay";
 
-export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvailable }) {
+export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvailable, onSetNewRequest }) {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [isSent, setSent] = useState(false);
@@ -56,7 +56,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
         main = "p";
         sessionCount = 3;
         duration = 16;
-        date = "28.4.24";
+        date = "6.4.24";
     }
 
     function getValues(arr) {
@@ -114,6 +114,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
         onSetNewDataAvailable(false);
         setOverlayText("Your data was successfully recorded!");
         await delay(2000);
+        onSetNewRequest(true);
         navigate('/myrecords');
     };
     

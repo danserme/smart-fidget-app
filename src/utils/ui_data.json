@@ -10,14 +10,10 @@
         },
         "newReq": {
             "reason": "New Access Request",
-            "text": "New Data was found on the device!",
+            "text": "You recieved a new shared access request!",
             "buttons": [{
-                "text": "Decline",
-                "link": "/"
-            },
-            {
-                "text": "Accept",
-                "link": "/"
+                "text": "View details",
+                "link": "/sharedAccess"
             }]
         },
         "preview": {
