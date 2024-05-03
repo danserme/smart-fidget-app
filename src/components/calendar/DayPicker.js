@@ -24,7 +24,7 @@ export default function DayPicker({ onDateChange }) {
             }
         }
     );
-    if (run && selectedDay) {
+    if (run && selectedDay.hasData) {
         onDateChange(selectedDay.date, selectedDay.hasData, selectedDay.sessionCount, selectedDay.detailed);
         setRun(false);
     }
