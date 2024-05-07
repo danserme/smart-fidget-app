@@ -75,7 +75,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
             }
         });
         avgHB = Math.floor((minHB + maxHB) / 2);
-        duration /= 3600; //multiply 3600 by 60 later
+        duration /= 60000; //multiply 3600 by 60 later
         duration = Math.floor(duration);
 
         let largestValue = 0;
