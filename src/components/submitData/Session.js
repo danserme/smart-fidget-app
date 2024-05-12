@@ -74,7 +74,7 @@ export default function Session({ session = placeholder, tot, date, run, onSetOv
                         }
                     }
                     const comment = notes.comment ? notes.comment : "";
-                    const duration = Math.floor(session.duration / 3600); //place as 60000
+                    const duration = Math.floor(session.duration / 1000);
                     const contract = new ethers.Contract(smartFidgetAddress, SmartFidget.abi, signer);
                     const transaction = await contract.addSession(
                         session.avg,

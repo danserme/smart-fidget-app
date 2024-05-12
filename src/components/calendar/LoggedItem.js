@@ -24,7 +24,7 @@ export default function LoggedItem({ session = placeholder }) {
             <div className="flex justify-between">
                 <div className="flex gap-5">
                     <h1 className="font-bold">{session.startTime} - {session.endTime}</h1>
-                    <p>({session.duration} min)</p>
+                    <p>({session.duration} sec)</p>
                 </div>
                 <Heartbeat text={"avg"} val={session.avg} />
             </div>
