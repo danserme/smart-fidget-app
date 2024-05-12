@@ -57,7 +57,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
         main = "p";
         sessionCount = 3;
         duration = 16;
-        date = "11.5.24";
+        date = "13.5.24";
     }
 
     useEffect(() => {
