@@ -13,7 +13,7 @@ export default function Summary({ date, main, avg, min, max, duration }) {
                 <Heartbeat text={"min"} val={min} />
             </div>
             <div className="w-full flex justify-between">
-                <p>Total duration of {duration} min</p>
+                <p>Total duration of {duration} sec</p>
                 <Heartbeat text={"max"} val={max} />
             </div>
         </div>

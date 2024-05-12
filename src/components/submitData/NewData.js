@@ -17,6 +17,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
     const [isMainSent, setMainSent] = useState(false);
     const [run, setRun] = useState(false);
     const [overlayText, setOverlayText] = useState("!");
+    // const [sentCount, setSentCount] = useState(0);
 
     useEffect(() => {
         if(!run && isMainSent) {
@@ -56,8 +57,23 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
         main = "p";
         sessionCount = 3;
         duration = 16;
-        date = "4.5.24";
+        date = "11.5.24";
     }
+
+    useEffect(() => {
+        if(isSent) {
+            const send = async () => {
+                // setSent(true);
+                onDisconnectDevice();
+                onSetNewDataAvailable(false);
+                setOverlayText("Your data was successfully recorded!");
+                await delay(2000);
+                onSetNewRequest(true);
+                navigate('/myrecords');
+            }
+            send();
+        }
+    }, [isSent, sessionCount, navigate, onDisconnectDevice, onSetNewDataAvailable, onSetNewRequest]);
 
     function getValues(arr) {
         minHB = arr[0].min;
@@ -103,20 +119,13 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
                 provider = new ethers.BrowserProvider(window.ethereum);
                 signer = await provider.getSigner();
             }
-            // console.log("Connected account:", await signer.getAddress());
+            console.log("Connected account:", await signer.getAddress());
             const contract = new ethers.Contract(smartFidgetAddress, SmartFidget.abi, signer);
-            setOverlayText("Now you are uploading the general data about your day.");
+            setOverlayText("Now you are uploading the general data about your day. It might take up to 2 minutes.");
             const transactionRecord = await contract.addRecord(avgHB, minHB, maxHB, sessionCount, duration, main, date);
-            setMainSent(true);
             await transactionRecord.wait();
-            setSent(true);
+            setMainSent(true);
         }
-        onDisconnectDevice();
-        onSetNewDataAvailable(false);
-        setOverlayText("Your data was successfully recorded!");
-        await delay(2000);
-        onSetNewRequest(true);
-        navigate('/myrecords');
     };
     
     
@@ -133,7 +142,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
                 {
                     passed && !isSent && combinedData.map((session, index) => {
                         return(
-                            <Session date={date} session={session} tot={sessionCount} key={index} run={run} onSetOverlayText={setOverlayText} />
+                            <Session date={date} session={session} tot={sessionCount} key={index} run={run} onSetOverlayText={setOverlayText} onSent={setSent} />
                         )
                     })
                 }
@@ -142,7 +151,7 @@ export default function NewData({ passed, onDisconnectDevice, onSetNewDataAvaila
                 {
                     !passed && !isSent && sessions.map((session, index) => {
                         return(
-                            <Session date={date} key={index} tot={sessions.length} run={run} onSetOverlayText={setOverlayText} />
+                            <Session date={date} key={index} tot={sessions.length} run={run} onSetOverlayText={setOverlayText} onSent={setSent} />
                         )
                     })
                 }

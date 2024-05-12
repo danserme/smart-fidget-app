@@ -20,7 +20,7 @@ const placeholder = {
     ccw: 0
 }
 
-export default function Session({ session = placeholder, tot, date, run, onSetOverlayText }) {
+export default function Session({ session = placeholder, tot, date, run, onSetOverlayText, onSent }) {
     const [edit, setEdit] = useState(false);
     const [notes, setNotes] = useState({});
     const [isSent, setIsSent] = useState(false);
@@ -91,12 +91,13 @@ export default function Session({ session = placeholder, tot, date, run, onSetOv
                     );
                     onSetOverlayText("Waiting for the data to be written on blockchain.");
                     await transaction.wait();
+                    setIsSent(true);
+                    onSent(true);
                 }
             }
             send();
-            setIsSent(true);
         }
-    }, [run, isSent, notes.mood, notes.activity, date, notes.comment, session.avg, session.duration, session.endTime, session.id, session.main, session.max, session.min, session.startTime, session.p, session.cw, session.ccw, onSetOverlayText]);
+    }, [run, isSent, onSent, notes.mood, notes.activity, date, notes.comment, session.avg, session.duration, session.endTime, session.id, session.main, session.max, session.min, session.startTime, session.p, session.cw, session.ccw, onSetOverlayText]);
 
     return(
         <div>
