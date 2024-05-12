@@ -69,6 +69,7 @@ export default function DayPicker({ onDateChange }) {
                     )}
                     onClick={() => {
                         setSelectDate(date);
+                        setRun(false);
                         onDateChange(date, hasData, sessionCount, detailed);
                     }}
                     >{date.date()}</h1>
