@@ -26,7 +26,7 @@ export default function NewRequestItem({ fullname = "Mario Ricco", role = "docto
                 </div>
             </div>
         );
-    } else if(newRequest && accepted) {
+    } else if(!newRequest && accepted) {
         return(
             <SharedAccessItem fullname={fullname} role={role} last="today" price={price} />
         );
