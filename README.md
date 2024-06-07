@@ -48,3 +48,10 @@ The Smart Fidget App provides a platform for users to manage their fidget spinne
 ## Smart Contract
 
 The smart contracts for this application are written in Solidity and managed using Hardhat. The primary contract, `FidgetSpinner.sol`, includes functions for registering and managing fidget spinner usage data.
+
+
+## License
+
+This program is licensed under the GNU General Public License v3.0. You can redistribute it and/or modify it under the terms of the GNU GPL as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
