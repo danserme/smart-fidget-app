@@ -1,4 +1,4 @@
-# Smart Fidget App
+# Smart Fidget Toy App
 
 The Smart Fidget App is a decentralized application (dApp) that allows users to interact with a smart contract for managing fidget spinner data. This project leverages blockchain technology to ensure secure and transparent management of fidget spinner usage records.
 
