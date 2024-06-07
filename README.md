@@ -8,6 +8,7 @@ The Smart Fidget App is a decentralized application (dApp) that allows users to 
 - [Requirements](#requirements)
 - [Usage](#usage)
 - [Smart Contract](#smart-contract)
+- [License](#license)
 
 ## Description
 
